@@ -1,0 +1,115 @@
+<div>
+    <div class="text-left table-responsive table-border" *ngIf="displayProducts && productList.length !=0">
+        <h3 class="card-header bg-primary text-white text-center">Deals For Today</h3>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th style="text-align: center">Image</th>
+                    <th style="text-align: center">Product Name</th>
+                    <th style="text-align: center">Brand</th>
+                    <th style="text-align: center">Price</th>
+                    <th style="text-align: center">Discount</th>
+                    <th style="text-align: center">Deal Discount</th>
+                    <th style="text-align: center">Deal Start</th>
+                    <th style="text-align: center">Deal End</th>
+                    <th style="text-align: center">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of productInDealList | paginate: {itemsPerPage: 10, currentPage: p}" [hidden]=viewDftProductDetail(product.productId) (click)='viewProductDetails(product.productId)'>
+                    <td><img [src]="'assets/resources/'+ productDetails.productId+'.jpg'" class="img-responsive center-block"
+                        alt="Image Not Found" onError="this.src='assets/resources/404.png'"></td>
+                    
+                    <td class="text-center">{{productDetails.name}}</td>
+                    <td class="text-center">{{productDetails.brand}}</td>
+                    <td class="text-center">{{productDetails.price}}</td>
+                    <td class="text-center">{{productDetails.discount}}</td>
+                    <td class="text-center">{{product.dealDiscount}}</td>
+                    <td class="text-center">{{product.dealStartsAt| dateConverter | date:'medium'}}</td>
+                    <td class="text-center">{{product.dealEndsAt| dateConverter| date:'medium'}}</td>
+                    <td>
+                        <!--[disabled]="isDealActive(product)"-->
+                        <button class="btn btn-danger" (click)="removeFromDeals(product)">Remove</button>
+                    </td>
+
+                
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="(errorMessage!='' || successMessage!='')">
+            <div class="error-message text-center font-weight-bold">{{errorMessage}}</div>
+            <div class="success-message text-center font-weight-bold">{{successMessage}}</div>
+        </div>
+    </div><br>
+    <div class="centerr">
+        <pagination-controls *ngIf="page && displayProducts && productInDealList?.length>0" (pageChange)="p=$event"  class="pagination"></pagination-controls>
+       </div>
+       <div class="text-center" *ngIf="displayProducts && !submitted && productNotInDealList?.length==0">
+        <h5 class="error-message">No products available</h5>
+   </div>
+    <div *ngIf="!(displayProducts)">
+        <div class="card text-center table-responsive col-md-10 offset-md-1 ">
+            <h3 class="card-header bg-primary text-white text-center">Product Details</h3>
+            
+                <table class="table">
+                    <tr>
+                        <th >Product ID:</th>
+                        <td class="text-left">
+                            {{productDetails.productId}}     
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Product Name:</th>
+                        <td class="text-left">
+                           {{productDetails.name}}
+                        </td>
+                    </tr>
+            <tr>
+            <th>Product Description:</th>
+            <td class="text-left">
+               {{productDetails.description}}
+            </td>
+        </tr>
+        <tr>
+            <th>Product Category:</th>
+            <td class="text-left">
+                {{productDetails.category}}
+            </td>
+        </tr>
+        <tr>
+            <th>Product Brand:</th>
+            <td class="text-left">
+               {{productDetails.brand}}
+            </td>
+        </tr>
+        <tr>
+            <th>Product Price:</th>
+            <td class="text-left">{{productDetails.price}}</td>
+        </tr>
+        <tr>
+            <th>Product Quantity:</th>
+            <td class="text-left">
+                {{productDetails.quantity}}
+            </td>
+        </tr>
+        <tr>
+            <th>Product Discount:</th>
+            <td class="text-left">
+            {{productDetails.discount}}    
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td><button type="button" (click)="displayProducts='True'" class="btn btn-success">Back</button></td>
+        </tr>
+        </table>
+
+
+        
+        </div>
+    </div>
+    <div class="text-center" *ngIf="displayProducts && productList.length ==0">
+        <h5 class="error-message">No products available</h5>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+<br>
+<br>
+
+<div class="row">
+  <div class="card-deck">
+    <div class="card bg-light">
+        <img class="card-img-top" [src]="'assets/resources/'+ selectedProduct.productId+'.jpg'"
+            alt="Image Not Found" onError="this.src='assets/resources/404.png'">
+
+    </div>
+</div>
+</div>
+
+<br><br>
+
+<div class="row">
+<div class="card-deck">
+    <div class="card shadow-lg">
+      <div class="text-left text-black">
+        <h4>
+          <b>{{selectedProduct.name}}</b><br>
+        </h4>
+      </div> <br>
+      <table class="table table-borderless">
+          <tr>
+              <th>
+                <span class="text-black">Product Id:</span>
+              </th>
+              <td>
+            <tr> {{selectedProduct.productId}}</tr>
+            </td>
+            </tr>
+        <tr>
+          <th>
+            <span class="text-black">Description</span>
+          </th>
+          <td>
+        <tr> {{selectedProduct.description}}</tr>
+        </td>
+        </tr>
+
+        <tr>
+          <th>
+            <span class="text-black">Category</span>
+          </th>
+          <td>
+        <tr> {{selectedProduct.category}}</tr>
+        </td>
+        </tr>
+
+        <tr>
+          <th>
+            <span class="text-black">Brand</span>
+          </th>
+          <td>
+        <tr> {{selectedProduct.brand}}</tr>
+        </td>
+        </tr>
+
+        <tr>
+          <th>
+            <span class="text-black">Price</span>
+          </th>
+          <td>
+        <tr> {{selectedProduct.price}}</tr>
+        </td>
+        </tr>
+
+        <tr>
+          <th>
+            <span class="text-black">Discount</span>
+          </th>
+          <td>
+        <tr> {{selectedProduct.discount}}</tr>
+        </td>
+        </tr>
+
+        <tr>
+          <th>
+            <span class="text-black">Quantity</span>
+          </th>
+          <td>
+        <tr> {{selectedProduct.quantity}}</tr>
+        </td>
+        </tr>
+      </table>
+    </div>
+
+
+
+  </div>
+
+
+</div>

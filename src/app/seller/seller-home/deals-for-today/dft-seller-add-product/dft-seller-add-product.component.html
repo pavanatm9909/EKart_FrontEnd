@@ -1,0 +1,113 @@
+<!--US 01 front end -->
+<div>
+    <!--  <div class="text-center table-responsive table-border" *ngIf="displayProducts && productList.length !=0">
+  -->  <div  class="text-center  table-responsive table-border " *ngIf="displayProducts && !submitted && productNotInDealList?.length>0">
+     <!-- col-md-8 offset-md-2 -->
+         <h3 class="card-header bg-primary text-white text-center">My Products</h3>
+         <table class="table">
+             <thead>
+                 <tr>
+                     <th  style="text-align: center">Image</th>
+                     <th  style="text-align: center">Product Id</th>
+                     <th  style="text-align: center">Product Name</th>
+                     <th  style="text-align: center">Brand</th>
+                     <th  style="text-align: center">Price</th>
+                     <th  style="text-align: center">Discount</th>
+                     <th  style="text-align: center">Action</th>
+                 </tr>
+             </thead>
+             <tbody>
+                     <tr *ngFor="let product of productNotInDealList | paginate: {itemsPerPage: 10, currentPage: p}">
+                     <td><img [src]="'assets/resources/'+ product.productId+'.jpg'" class="img-responsive center-block"
+                         alt="Image Not Found" onError="this.src='assets/resources/404.png'"></td>
+                     <td>{{product.productId}}</td>
+                     <td>{{product.name}}</td>
+                     <td>{{product.brand}}</td>
+                     <td>{{product.price}}</td>
+                     <td>{{product.discount}}</td>
+                     <td>  
+                     <button class="btn-info" (click)='add(product)'>Add to Deals</button>&nbsp;&nbsp;&nbsp; 
+                        </td>
+                 </tr>
+             </tbody>
+         </table>
+      </div><br>
+      <div class="centerr">
+        <pagination-controls *ngIf="page && displayProducts && !submitted && productNotInDealList?.length>0" (pageChange)="p=$event"  class="pagination"></pagination-controls>
+       </div>
+          <div class="text-center" *ngIf="displayProducts && !submitted && productNotInDealList?.length==0">
+               <h5 class="error-message">No products available</h5>
+          </div>
+  
+     </div>
+  
+     <div  *ngIf="!(displayProducts) && !submitted">    
+        <div *ngIf="successMessage!=''">
+          <h4 class=" text-center font-weight-bold">{{successMessage}}</h4><br><br>
+          <div class="centerr">
+          <button type="button" class="btn btn-success" (click)="displayProducts=true; submitted=false;">back</button>
+        </div>
+        </div>
+      </div>
+  
+  
+     <div *ngIf="!(displayProducts) && submitted">
+        <!-- <div *ngIf="errorMessage!=''">
+            <div class="error-message text-center font-weight-bold">{{errorMessage}}</div>
+        </div>  -->
+      <div class="row">
+        <div class="col-md-8 offset-md-2 bordering-side form-bg-light">
+          <h3 class="title">Enter the details to add a product in Deals</h3>
+          <br>
+          <form [formGroup]="productAddForm" (ngSubmit)="AddProduct()" #addProductForm="ngForm">
+            <table class="table table-condensed">
+              <tr>
+                <th>Start Date Time :</th>
+                <td>
+                  <input type="datetime-local" class="form-control"  formControlName="dealStartsAt" required="required"/>
+                  <div class="field-error-message" *ngIf="productAddForm.get('dealStartsAt').invalid
+                  && productAddForm.get('dealStartsAt').touched" >
+                  Start Date Time is mandatory.
+              </div>
+                </td>
+              </tr>
+              <tr>
+                <th>End Date Time :</th>
+                <td>
+                  <input type="datetime-local" class="form-control" formControlName="dealEndsAt" required="required" />
+                  <div class="field-error-message" *ngIf="productAddForm.get('dealEndsAt').invalid
+                  && productAddForm.get('dealEndsAt').touched" > 
+                  End Date Time is mandatory.
+              </div>
+                </td>
+              </tr>
+              
+              <tr>
+                <th>Discount in % :</th>
+                <td>
+                  <input type="number" class="form-control" formControlName="discount"  min=1  required="required"/>
+                  <div class="field-error-message" *ngIf="productAddForm.get('discount').invalid
+                  && productAddForm.get('discount').touched" > 
+                  Discount is mandatory and should be a greater than or equal to 0
+              </div>
+                </td>
+              </tr>
+              
+            </table>
+            <div>
+                <div class="row">          
+                    <button [disabled]="productAddForm.invalid || productAddForm.pristine"           
+                        class="col-md-4 offset-md-4 btn btn-primary form-button" >          
+                        Add Product          
+                     </button>          
+              </div></div> 
+          </form>
+          <br/>
+          <div *ngIf="successMessage!=null || errorMessage!=null">
+            <div class="success-message text-center">{{successMessage}}</div>
+            <div class="error-message text-center">{{errorMessage}}</div>
+          </div>
+        </div>
+      </div>
+      
+     </div>
